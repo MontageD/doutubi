@@ -1,0 +1,35 @@
+<!DOCTYPE html><html><head><title> <%= gconfig.seo.title %> </title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="<%= gconfig.seo.description %>"><meta name="keywords" content="<%= gconfig.seo.keywords %>"><meta name="author" content="ddexing"><meta name="robots" content="index,follow"><meta name="google" content="index,follow"><meta name="googlebot" content="index,follow"><meta name="verify" content="index,follow"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="format-detection" content="telephone=no, email=no"><meta name="HandheldFriendly" content="true"><meta name="MobileOptimized" content="320"><meta name="description" content="description of your site"><link rel="stylesheet" href="/css/myPagination.css"> <% include ./template/header %> <div class="main container hot-back" id="container"><!-- 图片瀑布流 --><div class="hot-list"><div class="hot-title">搜索关键词: <span> <%=keyword %></span></div> <% 
+      if(result.length>0){
+%> <div class="hot-all"><div class="hot-ul"> <% 
+                     for(var i = 0 ;i<result.length;i++){
+              %> <div class="hot-li"><div class="hot-img"><div class="hot-mark"><a target="_blank" href="/biaoqing/detail/<%=result[i].id %>"><img title="<%=result[i].name %>" data-original="<%= gconfig.cdn.img %><%=result[i].url %>"></a></div></div></div> <%   }
+              
+              
+          %> </div><!-- 图片瀑布流 --><!-- 分页控件 --><!-- 分页控件 --></div> <%  }else{
+
+              
+          %> <div class="search-none"><p>很遗憾,你搜索的内容为空</p><p>请重新输入搜素内容...</p></div> <%  }
+              
+        %> </div><div id="pagination" class="pagination"></div></div><script src="/js/myPagination.js"></script><script>window.onload = function () {
+            var limit = <%= limitNum %>; // 每页限制页数
+            var count = <%= count %>; // 总页数
+            var page = <%= page %>; // 当前页数
+            if (count != 0) {
+
+                new Page({
+                    id: 'pagination',
+                    pageTotal: Math.ceil(count / limit) == 0 ? '1' : Math.ceil(count / limit), //必填,总页数
+                    pageAmount: limit, //每页多少条
+                    dataTotal: count, //总共多少条数据
+                    curPage: page, //初始页码,不填默认为1
+                    pageSize: 5, //分页个数,不填默认为5
+                    showPageTotalFlag: true, //是否显示数据统计,不填默认不显示
+                    showSkipInputFlag: true, //是否支持跳转,不填默认不显示
+                    getPage: function (page) {
+                        //获取当前页数
+                        var keyid = <%= keyid %>;
+                        window.location.href = '/tag/search/keyword/'+keyid+'/page/' + page
+                    }
+                })
+            }
+        }</script> <% include ./template/footer %></head></html>

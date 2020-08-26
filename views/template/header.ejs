@@ -1,0 +1,105 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="baidu_union_verify" content="1fd606de5d1648df78b379c4c906cb07">
+
+<link rel='stylesheet' href='/static/bs.css' />
+<link rel='stylesheet' href='/css/reset.css' />
+<link rel='stylesheet' href='/css/style.css' />
+
+<script src="/js/jq.js"></script>
+<script src="/js/bs.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-105848775-4"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-105848775-4');
+</script>
+</head>
+
+<body>
+    <header id="header" class="idou-header">
+        <div class="">
+            <div class="header-pc">
+                <p class='header-logo'>
+                    <a href="/">
+                        <img src="/img/logo.png">
+                    </a>
+                </p>
+                <div class="header-con">
+                    <ul class="header-menu">
+                        <li><a href="/" class="<%=menu==1?'on':'' %>">表情包</a></li>
+                        <li><a href="/tag/all" class="<%=menu==2?'on':'' %>">表情标签库</a></li>
+                        <li><a href="/hot/all" class="<%=menu==3?'on':'' %>">热门表情</a></li>
+                        <li><a href="/tool" class="<%=menu==4?'on':'' %>">表情包工具</a></li>
+                        <li><a href="/hotArticle" class="<%=menu==5?'on':'' %>">表情包热文</a></li>
+                        <!-- <li><a href="/rList" class="<%=menu==6?'on':'' %>">表情包排行榜</a></li> -->
+                        <!-- <li><a href="/">制作表情包</a></li> -->
+                    </ul>
+                </div>
+               
+                <div class="header-search">
+                    <div class="input-search search-mid">
+                        <input type="text" id="searchInput" class="form-control-search" placeholder="请输入搜索内容">
+                        <span class="input-group-addon" id="searchBtn">
+
+
+                            <img src="/img/search.png">
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="header-mobile">
+                <p class='header-logo'>
+                    <a href="/">
+                        斗图表情包
+                    </a>
+                </p>
+                <div class="header-search">
+                    <input type="text" class="form-control" value="" placeholder="请输入搜索内容">
+                </div>
+                <div class="header-menu">
+                    <nav class="navbar" role="navigation">
+                        <div class="navbar-header">
+                            <div type="button" class="navbar-toggle nav-divider" data-toggle="collapse"
+                                data-target="#example-navbar-collapse">
+                                <span class="sr-only">切换导航</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </div>
+                        </div>
+
+                    </nav>
+                </div>
+                <div class="collapse navbar-collapse col-pos" id="example-navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <!-- <li class="active"><a href="#">iOS</a></li>
+                        <li><a href="#">SVN</a></li> -->
+
+                        <li><a href="/" class="<%=menu==1?'active':'' %>">表情包</a></li>
+                        <li><a href="/tag/all" class="<%=menu==2?'active':'' %>">表情标签库</a></li>
+                        <li><a href="/hot/all" class="<%=menu==3?'active':'' %>">热门表情</a></li>
+                        <li><a href="/tool" class="<%=menu==4?'on':'' %>">表情包工具</a></li>
+                        <li><a href="/hotArticle" class="<%=menu==5?'on':'' %>">表情包热文</a></li>
+                        <!-- <li><a href="/rList" class="<%=menu==6?'on':'' %>">表情包排行榜</a></li> -->
+
+                    </ul>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+        <div class="alert alert-warning alert-position" id="alert_warning">
+            <strong>警告!</strong>
+
+            <span>设置警告信息。</span>
+        </div>
+    </header>

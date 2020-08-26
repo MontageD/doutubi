@@ -1,0 +1,289 @@
+<!DOCTYPE html><html><head><title> <%= gconfig.seo.title %> </title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="<%= gconfig.seo.description %>"><meta name="keywords" content="<%= gconfig.seo.keywords %>"><meta name="author" content="ddexing"><meta name="robots" content="index,follow"><meta name="google" content="index,follow"><meta name="googlebot" content="index,follow"><meta name="verify" content="index,follow"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="format-detection" content="telephone=no, email=no"><meta name="HandheldFriendly" content="true"><meta name="MobileOptimized" content="320"><meta name="description" content="description of your site"><link rel="stylesheet" href="/css/myPagination.css"> <% include ./template/header %> <style>.progress{
+  position: relative; 
+  width:100%;
+  margin: 20px 0 ;
+  overflow: inherit;
+}
+.progress>.text{
+    margin:  10px 0;
+    text-align: center;
+}
+.progress_bg{
+  height: 20px;
+   border: 1px solid #ddd;
+    border-radius: 5px;
+     overflow: hidden;
+     background-color:#f2f2f2;
+    }
+.progress_bar{
+    background: #5FB878; 
+    width: 0; 
+    height: 20px;
+     border-radius: 5px;
+    }
+.progress_btn{
+    width: 30px;
+     height: 30px;
+      border-radius: 5px; 
+      position: absolute;
+      background:#fff; 
+        left: 0px;
+        top: 50%;
+        transform: translate(0,-50%);
+        margin-left: -10px; 
+        cursor: pointer;
+        border:1px #ddd solid;
+        box-sizing:border-box;
+}
+.progress_btn:hover{border-color:#F7B824;}</style><div class="main container diy-back" id="container"><div class="diyD-title"> <%=result.name %> </div><div class="diy_co"><div class="col-sm-6 col-xs-12"><div id="diy-coimg" class="diy-coimg" data-img="<%= gconfig.cdn.img %><%=result.url %>" style="background-image: url(<%= gconfig.cdn.img %><%=result.url %>);"><div class="move"><input type="text" id="moveText" maxlength="20" placeholder="请填写"></div><img id="divImg" crossorigin src="<%= gconfig.cdn.img %><%=result.url %>"></div><!-- <img alt="<%=result.name %>" title="result.name" data-original="<%= gconfig.cdn.img %><%=result.url %>" /> --></div><div class="col-sm-6 col-xs-12"><div class="diy-update"><div class="diy-update-size diy-update-title" style="padding:0 15px;"><div class="updateSize-title">字号</div><div class="progress"><div class="progress_bg"><div class="progress_bar"></div></div><div class="progress_btn"></div><div class="text">0%</div></div></div><div class="diy-update-color diy-update-title"><div class="updateColor-title">颜色</div><div class="updateColor-ul"></div></div><div class="diy-update-font diy-update-title"><div class="updateFont-title">字体</div><div class="updateFont-ul"></div></div><div class="diy-update-font"><button type="button" class="btn btn-primary btn-lg btn-block" id="submitImg">生成表情</button></div></div></div></div></div><canvas id="canvas" style="opacity:0;"></canvas><!-- <script src="/js/move.js"></script> --><script>var box = document.querySelector('.move') // 待拖拽元素
+var boxDom = $('.move')
+var upbox = $('.diy-coimg')
+var dragging = false
+var boxX, boxY, mouseX, mouseY, offsetX, offsetY
+
+box.onmousedown = down
+document.onmousemove = move
+document.onmouseup = up
+
+function down (e) {
+  dragging = true
+  boxX = box.offsetLeft
+  boxY = box.offsetTop
+  mouseX = parseInt(getMouseXY(e).x)
+  mouseY = parseInt(getMouseXY(e).y)
+  offsetX = mouseX - boxX
+  offsetY = mouseY - boxY
+}
+
+function move (e) {
+  if (dragging) {
+    var x = getMouseXY(e).x - offsetX
+    var y = getMouseXY(e).y - offsetY
+    var width = document.documentElement.clientWidth - box.offsetWidth
+    var height = document.documentElement.clientHeight - box.offsetHeight
+
+    x = Math.min(Math.max(0, x), width)
+    y = Math.min(Math.max(0, y), height)
+    if (x < parseInt(upbox.width() - parseInt(boxDom.width())) && y < parseInt(upbox.height() - parseInt(boxDom.height()))) {
+      box.style.left = x + 'px'
+      box.style.top = y + 'px'
+      box.style.transform = 'none'
+    }
+  }
+}
+function up (e) {
+  dragging = false
+}
+
+function getMouseXY (e) {
+  var x = 0; var y = 0
+  e = e || window.event
+  if (e.pageX) {
+    x = e.pageX
+    y = e.pageY
+  } else {
+    x = e.clientX + document.body.scrollLeft - document.body.clientLeft
+    y = e.clientY + document.body.scrollTop - document.body.clientTop
+  }
+  return {
+    x: x,
+    y: y
+  }
+}
+
+//  设置可选项
+$(function () {
+  // 颜色库
+  var colorList = [
+    'rgb(0, 0, 0)',
+    '#ffffff',
+    '#838383',
+    '#db3204',
+    '#f26202',
+    '#4070db',
+    '#24af79',
+    '#68479e'
+  ]
+
+  var familyList = [
+    'font-blank',
+    'font-xihei',
+    'font-song',
+    'font-Arial',
+    'font-Tahoma',
+    'font-Helvetica',
+    'font-Georgia'
+  ]
+  var htmoDom = ''
+  for (var i = 0; i < colorList.length; i++) {
+    htmoDom = htmoDom + '<div data-color="' + colorList[i] + '" class="updateColor-li col-xs-2">' +
+    ' <a style="background-color: ' + colorList[i] + '"></a>' +
+   '</div>'
+  }
+  $('.updateColor-ul').append(htmoDom)
+
+  var fontHtmlDom = ''
+  for (var i = 0; i < familyList.length; i++) {
+    fontHtmlDom = fontHtmlDom + '<div data-font="' + familyList[i] + '" class="updateFont-li col-xs-2">' +
+    ' <a style="" class="' + familyList[i] + '">字</a>' +
+   '</div>'
+  }
+  $('.updateFont-ul').append(fontHtmlDom)
+  $('.updateColor-li').eq(0).append('<div class="cheap"></div>')
+  $('.updateFont-li').eq(0).append('<div class="cheap"></div>')
+  $('.updateColor-li').on('click', function () {
+    $('.updateColor-li .cheap').remove()
+    $(this).append('<div class="cheap"></div>')
+    $('#moveText').css({
+      'color': $(this).attr('data-color')
+    })
+  })
+
+  $('.updateFont-li').on('click', function () {
+    $('.updateFont-li .cheap').remove()
+    $(this).append('<div class="cheap"></div>')
+    $('#moveText').attr('class', $(this).attr('data-font'))
+  })
+
+  //  初始化canvas 大小
+  $('#canvas').height($('.diy-coimg').height())
+  $('#canvas').width($('.diy-coimg').width())
+
+  // 最后上传图片
+  $('#submitImg').on('click', function () {
+    var canvas = document.getElementById('canvas')
+    var ctx = canvas.getContext('2d')
+    var divImg = document.getElementById('divImg')
+    canvas.width = parseInt($('.diy-coimg').css('height'))
+    canvas.height = parseInt($('.diy-coimg').css('width'))
+    var heightImg = parseInt($('.diy-coimg').css('height'))
+    var widthImg = parseInt($('.diy-coimg').css('width'))
+    // var image = new Image(heightImg, widthImg)
+    // image.src = $('.diy-coimg').attr('data-img')
+
+    // console.log($('.diy-coimg').attr('data-img'), heightImg, widthImg)
+    // image.onload = function () {
+    //   context.drawImage(this, 0, 0)
+    // }
+    ctx.drawImage(divImg, 0, 0, heightImg, widthImg)
+    var fontSize = ($('#moveText').css('font-size'))
+    var fontFamliy = $('#moveText').css('fontFamily')
+    ctx.font = 'bold' + ' ' + fontSize + ' ' + fontFamliy
+    ctx.textBaseline = 'middle'
+    ctx.textAlign = 'center'
+    console.log('输出的大小:', heightImg, widthImg)
+    console.log('输出的字体:', 'bold' + fontSize + '' + fontFamliy)
+    console.log('输出颜色:', $('.updateColor-ul .cheap').parent().attr('data-color'))
+    // console.log('输出参数', $('#moveText').val(), parseInt($('.move').css('left')), parseInt($('.move').css('top')))
+    ctx.fillStyle = $('.updateColor-ul .cheap').parent().attr('data-color')
+    var fontLeft = parseInt($('.move').css('left')) + (parseInt($('.move').css('width')) / 2) - ($('#moveText').val().length / 2 * (fontSize.replace('px', '')))
+    var fontTop = parseInt($('.move').css('top')) + 50
+    console.log('fontLeft:', fontLeft)
+    console.log('fontTop:', fontTop)
+    ctx.fillText($('#moveText').val(), fontLeft, fontTop)
+    // window.location = canvas.toDataURL('image/png')
+    exportCanvasAsPNG('canvas', 'fileName.jpg')
+  })
+
+  function exportCanvasAsPNG (id, fileName) {
+    console.log('下载图片')
+    var canvasElement = document.getElementById(id)
+
+    var MIME_TYPE = 'image/png'
+
+    var imgURL = canvasElement.toDataURL(MIME_TYPE)
+
+    // console.log('imgURL', imgURL)
+    var dlLink = document.createElement('a')
+    dlLink.download = fileName
+    dlLink.href = imgURL
+    dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':')
+
+    document.body.appendChild(dlLink)
+    dlLink.click()
+    document.body.removeChild(dlLink)
+  }
+})</script><script>//  拖拽api
+        $(function () {
+            //  进度条控制
+            var tag = false,
+                ox = 0,
+                left = 0,
+                bgleft = 0;
+            $('.progress_btn').mousedown(function (e) {
+                ox = e.pageX - left;
+                tag = true;
+            });
+            $(document).mouseup(function () {
+                tag = false;
+            });
+            $('.progress').mousemove(function (e) { //鼠标移动
+                var genWidth = $('.progress_bg').width()
+                if (tag) {
+                    left = e.pageX - ox;
+                    if (left <= 0) {
+                        left = 0;
+                    } else if (left > genWidth) {
+                        left = genWidth;
+                    }
+                    $('.progress_btn').css('left', left);
+                    $('.progress_bar').width(left);
+
+                    $('.text').html(parseInt((left / genWidth) * 100) + '%');
+                    console.log('滚动监听')
+                    $('.move input').css({
+                        'font-size': (left / genWidth) * 40 + 'px'
+                    })
+                }
+            });
+            $('.progress_bg').click(function (e) { //鼠标点击
+                var genWidth = $('.progress_bg').width()
+                if (!tag) {
+                    bgleft = $('.progress_bg').offset().left;
+                    left = e.pageX - bgleft;
+                    if (left <= 0) {
+                        left = 0;
+                    } else if (left > genWidth) {
+                        left = genWidth;
+                    }
+                    $('.progress_btn').css('left', left);
+                    $('.progress_bar').animate({
+                        width: left
+                    }, 300);
+                    $('.text').html(parseInt((left / genWidth) * 100) + '%');
+                }
+            });
+       
+
+
+        $('#searchBtn').on('click', function () {
+            var input = $('#searchInput').val()
+            if (!isSearch(input)) {
+                return false
+            } else {
+                window.location.href = '/search/search/keyword/' + input
+            }
+        })
+
+        function isSearch(input) {
+            if ((input) === '') {
+                $('#alert_warning').text('请填写搜索的内容').fadeIn()
+                setTimeout(function () {
+                    $('#alert_warning').fadeOut()
+                }, 2000)
+                return false
+            }
+            var re = /select|update|delete|exec|count|'|"|=|;|>|<|%/i
+            if (re.test(input)) {
+                console.log('请莫输入非法字符')
+                $('#alert_warning').text('请不要输入非法字符').fadeIn()
+                setTimeout(function () {
+                    $('#alert_warning').fadeOut()
+                }, 2000)
+                return false
+            }
+            return true
+        }
+
+
+    });</script> <% include ./template/footer %></head></html>

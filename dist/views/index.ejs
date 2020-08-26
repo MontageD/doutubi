@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><title><%= gconfig.seo.title %></title><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="<%= gconfig.seo.description %>"><meta name="keywords" content="<%= gconfig.seo.keywords %>"><meta name="author" content="ddexing"><meta name="robots" content="index,follow"><meta name="google" content="index,follow"><meta name="googlebot" content="index,follow"><meta name="verify" content="index,follow"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="format-detection" content="telephone=no, email=no"><meta name="HandheldFriendly" content="true"><meta name="MobileOptimized" content="320"><meta name="description" content="description of your site"> <% include ./template/header %> <div class="main container" id="container"><div class="section-left col-sm-9 col-xs-12"><!-- <div class="sec-menu">
+            <ul> <% result.forEach(function(item){
+                    if(item.name!==''){
+                    %> <li data-tid="<%=item.id %>"><%=item.name %></li> <% 
+                    }
+                }) %> </ul>
+        </div> --><!-- 遍历的所有的种类的表情包 --> <% for(var i = 0;i<result.length;i++){
+          if(i<4){
+      
+          %> <div class="sec-item"><div class="sec-item-title"><a href="/tag/search/keyword/<%=result[i].id %>"><span><%=result[i].name %></span><span><%=result[i].num %>个表情</span></a></div><div class="sec-item-list"> <% for(var j = 0;j<result[i].tmp.length;j++){
+              %> <div class="sec-list-li"><a target="_blank" href="/biaoqing/detail/<%=result[i].tmp[j].id %>"><!-- <img alt="<%=result[i].tmp[j].name %>" alt="<%=result[i].tmp[j].name %>" title="<%=result[i].tmp[j].name %>" alt="<%=result[i].tmp[j].name %>" src="<%= gconfig.cdn.img %><%=result[i].tmp[j].url %>"/> --> <img data-original="<%= gconfig.cdn.img %><%=result[i].tmp[j].url %>" title="<%=result[i].tmp[j].name %>" alt="<%=result[i].tmp[j].name %>"><div class="sec-list-l"><!-- <div class="sec-btn">
+                          <span>
+                            详情
+                          </span>
+                        </div> --><p class="sec-list-title"><%=result[i].tmp[j].name %></p><p class="sec-list-date"> <%= result[i].tmp[j].date?gconfig.dateFormat(result[i].tmp[j].date):'' %></p></div></a></div> <%  
+              } %> </div></div> <%  
+      } %> <%  
+      } %> <div class="sec-item"><div class="sec-item-title">今日最新更新</div><div class="sec-item-list"> <% for(var j = 0;j<hot.length;j++){
+                %> <div class="sec-list-li"><a target="_blank" href="/biaoqing/detail/<%=hot[j].id %>"><img data-original="<%= gconfig.cdn.img %><%=hot[j].url %>" title="<%=hot[j].name %>" alt="<%=hot[j].name %>"></a></div> <%  
+                } %> </div></div></div><div class="section-right col-sm-3 col-hidden"><div class="ri-tag"><ul> <% tagList.forEach(function(item){
+                          %> <li data-tid="<%=item.id %>"><a target="_blank" href="/tag/search/keyword/<%=item.id %>"> <%=item.name %> </a></li> <% 
+                      }) %> </ul></div><!-- <div class="rs-tag">
+                    <div class='rs-code'>
+                        <img src="<%= gconfig.cdn.img %>WechatIMG405.jpeg">
+                    </div>
+                    <p>
+                        扫一扫官方的微信小程序
+                    </p>
+                    <p>
+                      i斗图
+                    </p>
+               </div> --></div></div> <% include ./template/footer %></head></html>

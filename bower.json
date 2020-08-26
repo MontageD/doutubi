@@ -1,0 +1,21 @@
+{
+  "name": "voteapp",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./dist/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "vue": "^2.1.8"
+  }
+}
